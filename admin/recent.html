@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Updates Panel</title>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root{
+  --primary:#0A1F44;
+  --primary-light:#1E3A8A;
+  --danger:#ef4444;
+  --bg:#f8fbff;
+  --card:#ffffff;
+  --text:#0f172a;
+  --border:#e2e8f0;
+  --shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#f8fbff,#eef4ff);
+  min-height:100vh;
+  color:var(--text);
+  padding:20px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  background:var(--card);
+  border-radius:20px;
+  padding:25px;
+  box-shadow:var(--shadow);
+}
+
+h2{
+  text-align:center;
+  margin-bottom:25px;
+  color:var(--primary);
+  font-size:30px;
+  font-weight:700;
+}
+
+/* FORM */
+
+#updateForm{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+
+#updateForm input{
+  flex:1;
+  min-width:220px;
+  padding:13px 15px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  outline:none;
+}
+
+#updateForm input:focus{
+  border-color:var(--primary-light);
+}
+
+#updateForm button{
+  padding:13px 22px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+}
+
+#updateForm button:hover{
+  transform:translateY(-2px);
+}
+
+/* TABLE */
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  overflow:hidden;
+}
+
+thead{
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+}
+
+th{
+  color:#fff;
+  padding:15px;
+  text-align:left;
+}
+
+td{
+  padding:14px;
+  border-bottom:1px solid #e5e7eb;
+}
+
+tbody tr{
+  transition:.3s;
+}
+
+tbody tr:hover{
+  background:#f8fafc;
+}
+
+.delete-btn{
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  background:linear-gradient(135deg,#ef4444,#dc2626);
+  color:#fff;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.delete-btn:hover{
+  opacity:.9;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  body{
+    padding:12px;
+  }
+
+  .container{
+    padding:15px;
+  }
+
+  h2{
+    font-size:24px;
+  }
+
+  #updateForm{
+    flex-direction:column;
+  }
+
+  #updateForm input,
+  #updateForm button{
+    width:100%;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr{
+    display:block;
+    width:100%;
+  }
+
+  thead{
+    display:none;
+  }
+
+  tr{
+    background:#fff;
+    margin-bottom:15px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    overflow:hidden;
+  }
+
+  td{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    border:none;
+    border-bottom:1px solid #eee;
+  }
+
+  td:last-child{
+    border-bottom:none;
+  }
+
+  td::before{
+    content:attr(data-label);
+    font-weight:700;
+    color:var(--primary);
+  }
+}
+
+@media(max-width:480px){
+
+  h2{
+    font-size:20px;
+  }
+
+  td{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .delete-btn{
+    width:100%;
+  }
+} 
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Recent Updates</h2>
+    <form id="updateForm">
+        <input type="text" id="title" placeholder="Enter Update Title" required>
+        <input type="file" id="file" accept=".pdf,image/*">
+        <button type="submit">Publish Update</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="updateTable">
+            </tbody>
+    </table>
+</div>
+
+<script>
+
+  // ✅ Token globally define karo, localStorage se
+const token = localStorage.getItem("token");
+
+if (!token) {
+  window.location.replace("login.html");
+}
+
+// Auth verify (optional double-check)
+fetch("https://gsssshilla.onrender.com/verify-admin", {
+  headers: { Authorization: `Bearer ${token}` }
+})
+.then(res => res.json())
+.then(data => {
+  if (!data.success) {
+    localStorage.removeItem("token");
+    window.location.replace("login.html");
+  }
+})
+.catch(() => {
+  localStorage.removeItem("token");
+  window.location.replace("login.html");
+});
+
+
+
+    const API = "https://gsssshilla.onrender.com/recent";
+
+    // Auth Check
+    if (!token) window.location.replace("login.html");
+
+    async function loadUpdates() {
+        try {
+            const res = await fetch(API);
+            const data = await res.json();
+            const tbody = document.getElementById("updateTable");
+            tbody.innerHTML = "";
+
+            data.forEach(item => {
+                const date = new Date(item.created_at).toLocaleDateString();
+                const row = `
+                    <tr>
+                        <td data-label="ID">${item.id}</td>
+                        <td data-label="Title">${item.title}</td>
+                        <td data-label="Date">${date}</td>
+                        <td data-label="Action">
+                            <button class="delete-btn" onclick="deleteUpdate(${item.id})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        } catch (err) {
+            console.error("Error loading data:", err);
+        }
+    }
+
+    // Handle Form Submit
+    document.getElementById("updateForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("title", document.getElementById("title").value);
+        const file = document.getElementById("file").files[0];
+        if (file) formData.append("file", file);
+
+        await fetch(
+"https://gsssshilla.onrender.com/recent",
+{
+  method:"POST",
+  headers:{
+    Authorization:`Bearer ${token}`
+  },
+  body:formData
+});
+
+        alert("Update Added");
+        e.target.reset();
+        loadUpdates();
+    });
+
+    // Delete Function
+    async function deleteUpdate(id) {
+        if (!confirm("Delete this update?")) return;
+        await fetch(
+`https://gsssshilla.onrender.com/recent/${id}`,
+{
+  method:"DELETE",
+  headers:{
+    Authorization:`Bearer ${token}`
+  }
+});
+        loadUpdates();
+    }
+
+    loadUpdates();
+</script>
+
+</body>
+</html>

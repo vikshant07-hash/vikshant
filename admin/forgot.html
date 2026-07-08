@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forgot/ Reset Password</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+
+/* ================= RESET ================= */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+/* ================= BODY ================= */
+body{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Inter', sans-serif;
+  background:#0a1628;
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* ================= BACKGROUND ORBS ================= */
+body::before{
+  content:'';
+  position:fixed;
+  width:600px; height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(201,151,43,.18), transparent 70%);
+  top:-200px; right:-150px;
+  pointer-events:none;
+  animation:orbFloat 12s ease-in-out infinite alternate;
+}
+
+body::after{
+  content:'';
+  position:fixed;
+  width:500px; height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(37,99,235,.14), transparent 70%);
+  bottom:-180px; left:-120px;
+  pointer-events:none;
+  animation:orbFloat 16s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes orbFloat{
+  from{ transform:translateY(0) scale(1); }
+  to{   transform:translateY(50px) scale(1.05); }
+}
+
+/* grid overlay */
+.grid-bg{
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(201,151,43,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,151,43,.04) 1px, transparent 1px);
+  background-size:50px 50px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ================= CARD ================= */
+.card{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:440px;
+
+  background:rgba(255,255,255,.035);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+
+  border:1px solid rgba(201,151,43,.22);
+  border-radius:24px;
+
+  padding:44px 40px;
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.04) inset,
+    0 32px 64px rgba(0,0,0,.5),
+    0 0 80px rgba(201,151,43,.07);
+
+  animation:cardIn .55s cubic-bezier(.34,1.2,.64,1) both;
+}
+
+@keyframes cardIn{
+  from{ opacity:0; transform:translateY(30px) scale(.97); }
+  to{   opacity:1; transform:translateY(0)   scale(1);    }
+}
+
+/* ================= LOGO AREA ================= */
+.logo-row{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+  margin-bottom:30px;
+}
+
+.logo-ring{
+  width:68px; height:68px;
+  border-radius:50%;
+  border:2px solid rgba(201,151,43,.45);
+  background:rgba(201,151,43,.08);
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px;
+  position:relative;
+}
+
+.logo-ring::before{
+  content:'';
+  position:absolute;
+  inset:-5px;
+  border-radius:50%;
+  border:1px solid rgba(201,151,43,.15);
+}
+
+.logo-ring::after{
+  content:'';
+  position:absolute;
+  inset:-10px;
+  border-radius:50%;
+  border:1px solid rgba(201,151,43,.07);
+}
+
+.brand-name{
+  font-family:'Playfair Display', serif;
+  font-size:17px;
+  font-weight:700;
+  color:#fff;
+  text-align:center;
+  line-height:1.3;
+}
+
+.brand-tagline{
+  font-size:11px;
+  color:rgba(201,151,43,.8);
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-weight:600;
+}
+
+/* ================= DIVIDER ================= */
+.divider{
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(201,151,43,.3), transparent);
+  margin:0 0 28px;
+}
+
+/* ================= PAGE TITLE ================= */
+.page-title{
+  text-align:center;
+  margin-bottom:6px;
+}
+
+.page-title h2{
+  font-family:'Playfair Display', serif;
+  font-size:22px;
+  font-weight:700;
+  color:#fff;
+}
+
+.page-title p{
+  font-size:13px;
+  color:rgba(255,255,255,.45);
+  margin-top:6px;
+  line-height:1.6;
+}
+
+/* ================= STEPS BAR ================= */
+.steps-wrap{
+  display:flex;
+  align-items:center;
+  gap:0;
+  margin:22px 0 26px;
+}
+
+.step-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  flex:1;
+  position:relative;
+}
+
+.step-item:not(:last-child)::after{
+  content:'';
+  position:absolute;
+  top:13px;
+  left:60%;
+  width:80%;
+  height:1px;
+  background:rgba(255,255,255,.12);
+  transition:.4s;
+}
+
+.step-item.done:not(:last-child)::after{
+  background:linear-gradient(90deg, #c9972b, rgba(201,151,43,.3));
+}
+
+.step-circle{
+  width:26px; height:26px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.04);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px;
+  font-weight:700;
+  color:rgba(255,255,255,.3);
+  transition:.3s;
+  z-index:1;
+}
+
+.step-item.done .step-circle{
+  background:linear-gradient(135deg,#c9972b,#e8b84b);
+  border-color:#c9972b;
+  color:#0a1628;
+  box-shadow:0 0 12px rgba(201,151,43,.4);
+}
+
+.step-item.active .step-circle{
+  border-color:rgba(201,151,43,.6);
+  color:rgba(201,151,43,.8);
+  background:rgba(201,151,43,.08);
+}
+
+.step-label{
+  font-size:10px;
+  color:rgba(255,255,255,.25);
+  font-weight:600;
+  letter-spacing:.03em;
+  white-space:nowrap;
+  transition:.3s;
+}
+
+.step-item.done .step-label,
+.step-item.active .step-label{
+  color:rgba(201,151,43,.75);
+}
+
+/* ================= LABEL ================= */
+.field-label{
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  color:rgba(255,255,255,.5);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+
+/* ================= INPUT ================= */
+.input-wrap{
+  position:relative;
+  margin-bottom:16px;
+}
+
+.input-icon{
+  position:absolute;
+  left:14px; top:50%;
+  transform:translateY(-50%);
+  font-size:16px;
+  pointer-events:none;
+  color:rgba(201,151,43,.5);
+}
+
+.input-wrap input{
+  width:100%;
+  height:46px;
+  padding:0 14px 0 42px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  color:#fff;
+  font-size:14px;
+  font-family:'Inter', sans-serif;
+  outline:none;
+  transition:.25s;
+}
+
+.input-wrap input::placeholder{ color:rgba(255,255,255,.22); }
+
+.input-wrap input:focus{
+  border-color:rgba(201,151,43,.55);
+  background:rgba(255,255,255,.07);
+  box-shadow:0 0 0 3px rgba(201,151,43,.1);
+}
+
+/* ================= PRIMARY BUTTON ================= */
+.btn-primary{
+  width:100%;
+  height:48px;
+  border:none;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:700;
+  font-family:'Inter', sans-serif;
+  cursor:pointer;
+  transition:.3s ease;
+  position:relative;
+  overflow:hidden;
+  margin-top:4px;
+
+  background:linear-gradient(135deg,#c9972b,#e8b84b);
+  color:#0a1628;
+  box-shadow:0 8px 24px rgba(201,151,43,.3);
+}
+
+.btn-primary::before{
+  content:'';
+  position:absolute;
+  width:30px; height:200%;
+  background:rgba(255,255,255,.35);
+  top:-50%; left:-60px;
+  transform:rotate(25deg);
+  transition:.7s;
+}
+
+.btn-primary:hover::before{ left:160%; }
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 32px rgba(201,151,43,.4); }
+.btn-primary:active{ transform:scale(.98); }
+.btn-primary:disabled{ opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
+
+/* ================= OTP SECTION ================= */
+#resetSection{
+  display:none;
+  flex-direction:column;
+  gap:0;
+  margin-top:20px;
+  padding-top:20px;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+
+.otp-sent-badge{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(16,185,129,.1);
+  border:1px solid rgba(16,185,129,.25);
+  border-radius:10px;
+  padding:10px 14px;
+  font-size:13px;
+  font-weight:600;
+  color:#34d399;
+  margin-bottom:16px;
+}
+
+/* ================= MSG ================= */
+#msg{
+  display:none;
+  font-size:13px;
+  font-weight:600;
+  padding:12px 14px;
+  border-radius:10px;
+  text-align:center;
+  margin-top:4px;
+}
+
+#msg.success{
+  display:block;
+  background:rgba(16,185,129,.1);
+  border:1px solid rgba(16,185,129,.25);
+  color:#34d399;
+}
+
+#msg.error{
+  display:block;
+  background:rgba(239,68,68,.1);
+  border:1px solid rgba(239,68,68,.25);
+  color:#f87171;
+}
+
+/* ================= LOADER ================= */
+.loader-box{
+  display:none;
+  text-align:center;
+  padding:10px 0 4px;
+}
+
+.loader{
+  width:36px; height:36px;
+  border-radius:50%;
+  border:3px solid rgba(255,255,255,.08);
+  border-top:3px solid #c9972b;
+  border-right:3px solid rgba(201,151,43,.4);
+  animation:spin .75s linear infinite;
+  margin:0 auto 8px;
+}
+
+@keyframes spin{ 100%{ transform:rotate(360deg); } }
+.loader-box p{ font-size:12px; color:rgba(255,255,255,.4); }
+
+/* ================= BACK LINK ================= */
+.back-link{
+  text-align:center;
+  font-size:13px;
+  color:rgba(255,255,255,.3);
+  margin-top:6px;
+}
+
+.back-link a{
+  color:rgba(201,151,43,.8);
+  font-weight:600;
+  text-decoration:none;
+  transition:.2s;
+}
+
+.back-link a:hover{ color:#e8b84b; text-decoration:underline; }
+
+/* ================= BACK BUTTON ================= */
+.back-btn{
+  position:fixed;
+  top:18px; left:18px;
+  display:flex; align-items:center; gap:7px;
+  padding:9px 16px;
+  background:rgba(255,255,255,.07);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(201,151,43,.2);
+  color:#fff;
+  font-size:13px; font-weight:600;
+  font-family:'Inter', sans-serif;
+  text-decoration:none;
+  border-radius:10px;
+  transition:.25s;
+  z-index:99;
+}
+
+.back-btn:hover{
+  background:rgba(201,151,43,.15);
+  border-color:rgba(201,151,43,.4);
+  transform:translateY(-2px);
+}
+
+.back-btn-arrow{ font-size:16px; }
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:600px){
+  .card{ padding:32px 22px; }
+
+  .back-btn{
+    width:42px; height:42px;
+    padding:0; justify-content:center;
+    border-radius:50%;
+    font-size:0;
+  }
+
+  .back-btn-text{ display:none; }
+
+  .back-btn .back-btn-arrow{ font-size:18px; }
+
+  .brand-name{ font-size:15px; }
+}
+
+
+.logo-ring{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.logo-ring img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+
+
+<!-- CARD -->
+<div class="card">
+
+  <!-- LOGO -->
+  <div class="logo-row">
+    <div class="logo-ring" > 
+      <img src="../1778132110413-ChatGPT Image May 7, 2026, 10_56_26 AM.png" alt="">
+    </div>
+    <div>
+      <div class="brand-name">Govt. Sr. Sec. School Shilla</div>
+      <div class="brand-tagline" style="text-align:center;margin-top:4px;">Admin Portal</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TITLE -->
+  <div class="page-title">
+    <h2>Forgot/ Reset Password </h2>
+    <p>Verify your email and reset your access securely</p>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps-wrap" id="stepsBar">
+    <div class="step-item active" id="step1">
+      <div class="step-circle">1</div>
+      <div class="step-label">Email</div>
+    </div>
+    <div class="step-item" id="step2">
+      <div class="step-circle">2</div>
+      <div class="step-label">OTP</div>
+    </div>
+    <div class="step-item" id="step3">
+      <div class="step-circle">3</div>
+      <div class="step-label">Done</div>
+    </div>
+  </div>
+
+  <!-- EMAIL FIELD -->
+  <label class="field-label">Registered Email</label>
+  <div class="input-wrap" id="emailField">
+    <span class="input-icon">✉️</span>
+    <input type="email" id="email" placeholder="admin@gsssshilla.in">
+  </div>
+
+  <!-- SEND OTP BUTTON -->
+  <button class="btn-primary" id="sendResetBtn" onclick="sendResetOTP()">
+    Send OTP →
+  </button>
+
+  <!-- OTP + NEW PASSWORD SECTION -->
+  <div id="resetSection">
+
+    <div class="otp-sent-badge">
+      ✅ OTP sent — check your Email Inbox
+    </div>
+
+    <label class="field-label">Enter OTP</label>
+    <div class="input-wrap">
+      <span class="input-icon">🔑</span>
+      <input type="text" id="otp" placeholder="6-digit code" maxlength="6">
+    </div>
+
+    <label class="field-label">New Password</label>
+    <div class="input-wrap">
+      <span class="input-icon">🔒</span>
+      <input type="password" id="newPassword" placeholder="Min. 6 characters">
+    </div>
+
+    <button class="btn-primary" id="changeBtn" onclick="changePassword()">
+      Change Password →
+    </button>
+
+  </div>
+
+  <!-- LOADER -->
+  <div class="loader-box" id="loader">
+    <div class="loader"></div>
+    <p>Please wait...</p>
+  </div>
+
+  <!-- MESSAGE -->
+  <div id="msg"></div>
+
+  <!-- BACK LINK -->
+  <div class="back-link">
+    Remember it? <a href="login.html">Back to Login</a>
+  </div>
+
+</div>
+
+<script>
+
+/* ================= HELPERS ================= */
+
+function showMessage(text, type){
+  const msg = document.getElementById("msg");
+  msg.innerText = text;
+  msg.className = type === "success" ? "success" : "error";
+}
+
+function showLoader(){ document.getElementById("loader").style.display = "block"; }
+function hideLoader(){ document.getElementById("loader").style.display = "none"; }
+
+function isValidEmail(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+/* ---- Step progress ---- */
+function setStep(n){
+  for(let i = 1; i <= 3; i++){
+    const el = document.getElementById("step" + i);
+    el.classList.remove("done","active");
+    if(i < n)  el.classList.add("done");
+    if(i === n) el.classList.add("active");
+  }
+}
+
+/* ================= SEND OTP ================= */
+
+async function sendResetOTP(){
+
+  const email = document.getElementById("email").value.trim();
+
+  if(!email)            return showMessage("Please enter your email address","error");
+  if(!isValidEmail(email)) return showMessage("Enter a valid email address","error");
+
+  const btn = document.getElementById("sendResetBtn");
+  btn.disabled = true;
+  btn.innerText = "Sending…";
+
+  showLoader();
+
+  try {
+
+    const res = await fetch("https://gsssshilla.onrender.com/send-reset-otp",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ email })
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+
+      showMessage("OTP sent to your email!","success");
+
+      document.getElementById("resetSection").style.display = "flex";
+      setStep(2);
+
+      btn.innerText = "OTP Sent ✓";
+
+    } else {
+
+      showMessage(data.message || "Failed to send OTP","error");
+      btn.disabled = false;
+      btn.innerText = "Send OTP →";
+
+    }
+
+  } catch(err){
+
+    showMessage("Server error. Try again.","error");
+    btn.disabled = false;
+    btn.innerText = "Send OTP →";
+
+  } finally {
+    hideLoader();
+  }
+}
+
+/* ================= CHANGE PASSWORD ================= */
+
+async function changePassword(){
+
+  const email       = document.getElementById("email").value.trim();
+  const otp         = document.getElementById("otp").value.trim();
+  const newPassword = document.getElementById("newPassword").value.trim();
+
+  if(!otp)             return showMessage("Enter the OTP","error");
+  if(otp.length !== 6) return showMessage("OTP must be 6 digits","error");
+  if(newPassword.length < 6) return showMessage("Password must be at least 6 characters","error");
+
+  const btn = document.getElementById("changeBtn");
+  btn.disabled = true;
+  btn.innerText = "Processing…";
+
+  showLoader();
+
+  try {
+
+    const res = await fetch("https://gsssshilla.onrender.com/reset-password",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ email, otp, newPassword })
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+
+      showMessage("✅ Password changed successfully! Redirecting…","success");
+      setStep(3);
+      btn.innerText = "Done ✓";
+
+      setTimeout(() => { window.location.href = "login.html"; }, 1500);
+
+    } else {
+
+      showMessage(data.message || "Invalid OTP","error");
+      btn.disabled = false;
+      btn.innerText = "Change Password →";
+
+    }
+
+  } catch(err){
+
+    showMessage("Server error. Try again.","error");
+    btn.disabled = false;
+    btn.innerText = "Change Password →";
+
+  } finally {
+    hideLoader();
+  }
+}
+
+/* ================= ENTER KEY ================= */
+
+document.addEventListener("keydown", function(e){
+  if(e.key !== "Enter") return;
+  const resetVisible = document.getElementById("resetSection").style.display;
+  if(resetVisible === "flex") changePassword();
+  else sendResetOTP();
+});
+
+</script>
+</body>
+</html>

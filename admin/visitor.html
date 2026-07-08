@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Visitor Analytics Dashboard</title>
+
+  <!-- CHART JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root{
+
+  /* ================= THEME COLORS ================= */
+  --primary:#1E3A8A;        /* deep navy */
+  --secondary:#879225;      /* blue */
+  --accent:#af912f;         /* sky cyan */
+
+  --bg-dark:#fafafa;        /* dark base */
+  --bg-mid:#e9f0ff;
+
+  --glass:rgba(131, 102, 102, 0.06);
+  --border:rgba(255,255,255,0.12);
+
+  --text:#ffffff;
+  --muted:#cbd5e1;
+
+  --success:#22c55e;
+  --danger:#ef4444;
+
+  --shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* ================= RESET ================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,var(--bg-dark),var(--bg-mid));
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ================= DASHBOARD ================= */
+.dashboard{
+  padding:40px 16px;
+  text-align:center;
+}
+
+/* TITLE */
+.dashboard h2{
+  font-size:30px;
+  font-weight:700;
+  color:var(--accent);
+  margin-bottom:25px;
+  text-shadow:0 0 18px rgba(56,189,248,0.25);
+}
+
+/* ================= TIME BOX ================= */
+.time-box{
+  max-width:300px;
+  margin:20px auto;
+
+  padding:16px;
+  border-radius:16px;
+
+  background:var(--glass);
+  border:1px solid var(--border);
+
+  backdrop-filter:blur(14px);
+
+  color:var(--accent);
+
+  box-shadow:var(--shadow);
+
+  font-size:14px;
+  line-height:1.8;
+}
+
+/* ================= CARDS ================= */
+.cards{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:18px;
+  margin-top:30px;
+}
+
+/* CARD STYLE */
+.card{
+  width:240px;
+  padding:22px;
+
+  border-radius:18px;
+
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+
+  box-shadow:var(--shadow);
+
+  transition:0.3s ease;
+
+  position:relative;
+  overflow:hidden;
+}
+
+/* LIGHT GLOW */
+.card::before{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-60%;
+  width:200%;
+  height:200%;
+
+  background:radial-gradient(circle,rgba(255,255,255,0.12),transparent 60%);
+  transform:rotate(25deg);
+}
+
+.card:hover{
+  transform:translateY(-6px) scale(1.03);
+}
+
+.card h3{
+  font-size:16px;
+  margin-bottom:10px;
+  color:white;
+}
+
+.card p{
+  font-size:40px;
+  font-weight:700;
+  color:white;
+}
+
+/* ================= RESET BUTTON ================= */
+.reset-btn{
+  margin-top:25px;
+  padding:12px 22px;
+
+  border:none;
+  border-radius:12px;
+
+  background:linear-gradient(135deg,var(--danger),#b91c1c);
+  color:white;
+
+  font-weight:600;
+
+  cursor:pointer;
+  transition:0.3s ease;
+
+  box-shadow:0 8px 20px rgba(239,68,68,0.3);
+}
+
+.reset-btn:hover{
+  transform:scale(1.05);
+}
+
+/* ================= CHART BOX ================= */
+.chart-box{
+  max-width:800px;
+  margin:40px auto;
+
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:18px;
+
+  padding:20px;
+
+  backdrop-filter:blur(14px);
+
+  box-shadow:var(--shadow);
+}
+
+canvas{
+  width:100% !important;
+  height:360px !important;
+
+  background:white;
+  border-radius:12px;
+  padding:10px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+
+  .dashboard h2{
+    font-size:22px;
+  }
+
+  .card{
+    width:100%;
+    max-width:320px;
+  }
+
+  .time-box{
+    width:100%;
+    max-width:320px;
+  }
+
+  canvas{
+    height:250px !important;
+  }
+
+  .cards{
+    gap:12px;
+  }
+}
+
+
+/* ===================================
+   PROFESSIONAL ADMIN NAVBAR
+=================================== */
+
+.navbar{
+    width:100%;
+    position:sticky;
+    top:0;
+    z-index:9999;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:linear-gradient(
+        135deg,
+        #081C45,
+        #123A7A
+    );
+
+    padding:14px 25px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.15);
+
+    margin-bottom:25px;
+}
+
+/* Logo */
+
+.logo-section{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.school-logo{
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+    object-fit:cover;
+
+    border:3px solid #D4AF37;
+
+    background:#fff;
+}
+
+.school-info{
+    display:flex;
+    flex-direction:column;
+}
+
+.school-info h2{
+    color:#fff;
+    font-size:18px;
+    font-weight:700;
+    line-height:1.2;
+}
+
+.school-info span{
+    color:#D4AF37;
+    font-size:12px;
+    font-weight:500;
+}
+
+/* Nav */
+
+.nav-menu{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.nav-menu a{
+    text-decoration:none;
+
+    color:#dbeafe;
+
+    padding:11px 15px;
+
+    border-radius:10px;
+
+    font-size:14px;
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.nav-menu a:hover{
+    background:rgba(212,175,55,.15);
+    color:#fff;
+}
+
+.nav-menu a.active{
+    background:#D4AF37;
+    color:#081C45;
+}
+
+/* Logout */
+
+.logout-btn{
+    margin-left:10px;
+
+    border:none;
+
+    background:linear-gradient(
+        135deg,
+        #1c3e7e,
+        #F5D76E
+    );
+
+    color:#081C45;
+
+    padding:11px 22px;
+
+    border-radius:50px;
+
+    font-size:14px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.logout-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 8px 20px rgba(212,175,55,.35);
+}
+
+/* Mobile Menu Button */
+
+.mobile-menu-btn{
+    display:none;
+
+    color:#fff;
+
+    font-size:28px;
+
+    cursor:pointer;
+}
+
+/* ===================================
+   TABLET
+=================================== */
+
+@media(max-width:1200px){
+
+    .school-info h2{
+        font-size:16px;
+    }
+
+    .nav-menu a{
+        padding:10px 12px;
+        font-size:13px;
+    }
+
+}
+
+/* ===================================
+   MOBILE
+=================================== */
+
+@media(max-width:950px){
+
+    .mobile-menu-btn{
+        display:block;
+    }
+
+    .nav-menu{
+
+        position:absolute;
+
+        top:100%;
+
+        left:0;
+        right:0;
+
+        background:#081C45;
+
+        flex-direction:column;
+
+        padding:15px;
+
+        gap:5px;
+
+        display:none;
+
+        box-shadow:
+        0 15px 30px rgba(0,0,0,.2);
+    }
+
+    .nav-menu.active{
+        display:flex;
+    }
+
+    .nav-menu a{
+        width:100%;
+        text-align:left;
+    }
+
+    .logout-btn{
+        width:100%;
+        margin:10px 0 0;
+    }
+
+}
+
+/* ===================================
+   SMALL MOBILE
+=================================== */
+
+@media(max-width:600px){
+
+    .navbar{
+        padding:12px 15px;
+    }
+
+    .school-logo{
+        width:45px;
+        height:45px;
+    }
+
+    .school-info h2{
+        font-size:14px;
+    }
+
+    .school-info span{
+        font-size:11px;
+    }
+
+}
+
+/* ===================================
+   EXTRA SMALL
+=================================== */
+
+@media(max-width:450px){
+
+    .school-info h2{
+        font-size:13px;
+    }
+
+    .school-info span{
+        display:none;
+    }
+
+}
+  </style>
+
+</head>
+
+<body>
+
+  <!-- =========================
+       DASHBOARD
+  ========================= -->
+<header class="navbar">
+
+    <!-- Left Logo -->
+    <div class="logo-section">
+
+        <img src="../1778132110413-ChatGPT Image May 7, 2026, 10_56_26 AM.png" alt="School Logo" class="school-logo">
+
+        <div class="school-info">
+            <h2>Govt. Sr. Sec. School Shilla</h2>
+            <span>School Management Panel</span>
+        </div>
+
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-btn" id="menuToggle">
+        ☰
+    </div>
+
+    <!-- Nav -->
+    <nav class="nav-menu" id="navLinks">
+
+        <a href="admin-dashboard.html">Dashboard</a>
+
+        <a href="add-image.html">
+            Gallery
+        </a>
+
+        <a href="admin-img.html">
+            Home Slider
+        </a>
+
+        <a href="admin-faculity.html">
+            Faculty
+        </a>
+
+        <a href="admin-notif.html">
+            Notifications
+        </a>
+
+        <a href="admin-downl.html">
+            Downloads
+        </a>
+
+        <a href="admin-contact.html" >
+            Contact
+        </a>
+
+        <a href="visitor.html" class
+        ="active">
+            Visitors
+        </a>
+
+        <button class="logout-btn" onclick="logout()">
+            Logout
+        </button>
+
+    </nav>
+
+</header>
+
+
+  <div class="dashboard">
+   
+    <h2>📊 Visitor Analytics Dashboard</h2>
+
+    <!-- =========================
+         TIME BOX
+    ========================= -->
+
+    <div class="time-box">
+
+      📅 <span id="date"></span>
+      <br>
+
+      ⏰ <span id="time"></span>
+      <br>
+
+      📆 <span id="day"></span>
+
+    </div>
+
+    <!-- =========================
+         VISITOR CARDS
+    ========================= -->
+
+    <div class="cards">
+
+      <div class="card">
+
+        <h3>Today Visitors</h3>
+
+        <p id="today">0</p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>Total Visitors</h3>
+
+        <p id="total">0</p>
+
+      </div>
+
+    </div>
+
+    <!-- =========================
+         RESET BUTTON
+    ========================= -->
+
+    <button class="reset-btn" onclick="resetVisitors()">
+      🔄 Reset Visitors
+    </button>
+
+    <!-- =========================
+         CHART
+    ========================= -->
+
+    <div class="chart-box">
+
+      <canvas id="visitorChart"></canvas>
+
+    </div>
+
+  </div>
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+
+ // ✅ Token globally define karo, localStorage se
+const token = localStorage.getItem("token");
+
+if (!token) {
+  window.location.replace("login.html");
+}
+
+// Auth verify (optional double-check)
+fetch("https://gsssshilla.onrender.com/verify-admin", {
+  headers: { Authorization: `Bearer ${token}` }
+})
+.then(res => res.json())
+.then(data => {
+  if (!data.success) {
+    localStorage.removeItem("token");
+    window.location.replace("login.html");
+  }
+})
+.catch(() => {
+  localStorage.removeItem("token");
+  window.location.replace("login.html");
+});
+
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+
+    navLinks.classList.toggle("active");
+
+    menuToggle.innerHTML =
+    navLinks.classList.contains("active")
+    ? "✕"
+    : "☰";
+
+});
+
+function logout(){
+
+    const navLinks = document.getElementById("navLinks");
+    const menuToggle = document.getElementById("menuToggle");
+
+    navLinks.classList.remove("active");
+
+    if(menuToggle){
+        menuToggle.innerHTML = "☰";
+    }
+
+    Swal.fire({
+        title: "Logout?",
+        text: "Do you really want to logout from Admin Panel?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#D4AF37",
+        cancelButtonColor: "#123A7A",
+        confirmButtonText: "Yes, Logout",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+
+        if(result.isConfirmed){
+
+            localStorage.removeItem("token");
+            sessionStorage.clear();
+
+            window.location.replace("login.html");
+        }
+
+    });
+
+}
+
+/* ===============================
+   TRACK VISITOR
+=============================== */
+
+fetch("https://gsssshilla.onrender.com/analytics/track")
+  .then(res => res.json())
+  .then(data => {
+    console.log("Visitor tracked:", data);
+  })
+  .catch(err => console.log(err));
+
+/* ===============================
+   DATE & TIME
+=============================== */
+
+function updateTime(){
+
+  const now = new Date();
+
+  document.getElementById(
+    "date"
+  ).innerText =
+    now.toLocaleDateString();
+
+  document.getElementById(
+    "time"
+  ).innerText =
+    now.toLocaleTimeString();
+
+  const days = [
+
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+
+  ];
+
+  document.getElementById(
+    "day"
+  ).innerText =
+    days[now.getDay()];
+
+}
+
+setInterval(updateTime,1000);
+
+updateTime();
+
+/* ===============================
+   LOAD ANALYTICS
+=============================== */
+
+let chart;
+
+function loadAnalytics(){
+
+  fetch(
+    "https://gsssshilla.onrender.com/analytics/stats"
+  )
+
+  .then(res => res.json())
+
+  .then(data => {
+
+    document.getElementById(
+      "today"
+    ).innerText =
+      data.today;
+
+    document.getElementById(
+      "total"
+    ).innerText =
+      data.total;
+
+    const ctx =
+      document.getElementById(
+        "visitorChart"
+      );
+
+    if(chart){
+
+      chart.destroy();
+
+    }
+
+    chart = new Chart(ctx,{
+
+      type:'line',
+
+      data:{
+
+        labels:[
+          'Today',
+          'Total'
+        ],
+
+        datasets:[{
+
+          label:'Visitors',
+
+          data:[
+            data.today,
+            data.total
+          ],
+
+          borderColor:'#38bdf8',
+
+          backgroundColor:
+            'rgba(56,189,248,0.2)',
+
+          tension:0.4,
+
+          fill:true
+
+        }]
+
+      },
+
+      options:{
+
+        responsive:true,
+
+        scales:{
+
+          y:{
+            beginAtZero:true
+          }
+
+        }
+
+      }
+
+    });
+
+  })
+
+  .catch(err => {
+
+    console.log(err);
+
+  });
+
+}
+
+/* LOAD */
+
+loadAnalytics();
+
+
+
+
+
+/* ===============================
+   RESET VISITORS
+=============================== */
+
+function resetVisitors(){
+
+  const confirmReset = confirm(
+    "Reset all visitor data?"
+  );
+
+  if(confirmReset){
+
+    fetch(
+      "https://gsssshilla.onrender.com/analytics/reset",
+      {
+        method:"DELETE"
+      }
+    )
+
+    .then(res => res.json())
+
+    .then(data => {
+
+      alert(
+        "Visitors reset successfully!"
+      );
+
+      /* RESET UI */
+
+      document.getElementById(
+        "today"
+      ).innerText = 0;
+
+      document.getElementById(
+        "total"
+      ).innerText = 0;
+
+      if(chart){
+
+        chart.destroy();
+
+      }
+
+      /* RELOAD */
+
+      setTimeout(()=>{
+
+        loadAnalytics();
+
+      },500);
+
+    })
+
+    .catch(err => {
+
+      console.log(err);
+
+    });
+
+  }
+
+}
+
+</script>
+
+</body>
+
+</html>

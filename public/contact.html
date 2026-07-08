@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ================= BASE ================= */
+*{
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Poppins, sans-serif;
+  background:#f4f7fb;
+  margin:0;
+}
+
+/* ================= CONTACT CONTAINER ================= */
+.contact-container{
+  max-width:1100px;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+  padding:20px;
+}
+
+/* ================= CONTACT INFO ================= */
+.contact-info{
+  background:linear-gradient(135deg,#070c50,#501846,#631e46);
+  color:white;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.4);
+}
+
+.contact-info h2{
+  margin-bottom:20px;
+}
+
+.info-item{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  background:rgba(255,255,255,0.1);
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:12px;
+  transition:0.3s;
+}
+
+.info-item:hover{
+  transform:translateX(6px);
+  background:rgba(255,255,255,0.2);
+}
+
+.info-icon{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#00c6ff,#0072ff);
+  font-size:18px;
+}
+
+.info-text strong{
+  display:block;
+  font-size:14px;
+  color:#00c6ff;
+}
+
+.info-text span{
+  font-size:15px;
+}
+
+/* ================= FORM ================= */
+.contact-form{
+  background:#fff;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:5px 10px 30px rgba(0,0,0,0.1);
+}
+
+.contact-form h2{
+  margin-bottom:20px;
+}
+
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+.contact-form textarea{
+  resize:none;
+  height:120px;
+}
+
+.contact-form button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:25px;
+  background:linear-gradient(135deg,#6a11cb,#1e3c72);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.contact-form button:hover{
+  transform:scale(1.05);
+}
+
+.success{
+  color:green;
+  text-align:center;
+  margin-top:10px;
+}
+
+
+
+
+/* ==========================
+   SCHOOL LOGO SECTION
+========================== */
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-decoration:none;
+    min-width:0;
+}
+
+/* LOGO IMAGE */
+
+.logo img{
+    width:52px;
+    height:52px;
+
+    border-radius:50%;
+    object-fit:cover;
+
+    background:#fff;
+
+    padding:2px;
+
+    border:2px solid #D4AF37;
+
+    box-shadow:
+    0 4px 15px rgba(212,175,55,.25);
+
+    transition:.35s ease;
+}
+
+.logo img:hover{
+    transform:rotate(8deg) scale(1.08);
+
+    box-shadow:
+    0 8px 20px rgba(212,175,55,.45);
+}
+
+/* TEXT WRAPPER */
+
+.logo-text{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    line-height:1.2;
+
+    white-space:nowrap;
+}
+
+/* SCHOOL NAME */
+
+.school-name{
+    font-size:17px;
+    font-weight:800;
+
+    color:#ffffff;
+
+    letter-spacing:.3px;
+
+    text-shadow:
+    0 2px 8px rgba(0,0,0,.25);
+}
+
+/* TAGLINE */
+
+.school-tagline{
+    margin-top:2px;
+
+    font-size:11px;
+    font-weight:600;
+
+    color:#D4AF37;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+}
+
+/* ==========================
+   TABLET
+========================== */
+
+@media(max-width:768px){
+
+    .logo{
+        gap:10px;
+    }
+
+    .logo img{
+        width:44px;
+        height:44px;
+    }
+
+    .school-name{
+        font-size:14px;
+    }
+
+    .school-tagline{
+        font-size:9px;
+        letter-spacing:.8px;
+    }
+}
+
+/* ==========================
+   SMALL MOBILE
+========================== */
+
+@media(max-width:480px){
+
+    .logo{
+        gap:8px;
+    }
+
+    .logo img{
+        width:38px;
+        height:38px;
+    }
+
+    .school-name{
+        font-size:12px;
+        max-width:150px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .school-tagline{
+        font-size:8px;
+    }
+}
+
+/* ==========================
+   VERY SMALL MOBILE
+========================== */
+
+@media(max-width:360px){
+
+    .school-name{
+        font-size:11px;
+        max-width:120px;
+    }
+
+    .school-tagline{
+        display:none;
+    }
+}
+
+
+/* ==========================
+   PREMIUM LOGIN BUTTON
+========================== */
+
+.desktop-login{
+    display:flex;
+    align-items:center;
+}
+
+.login-btn{
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    min-width:120px;
+    height:46px;
+
+    padding:0 24px;
+
+    border:none;
+    border-radius:50px;
+
+    background:linear-gradient(
+        135deg,
+        #D4AF37,
+        #F5D76E
+    );
+
+    color:#081120;
+
+    font-size:14px;
+    font-weight:800;
+    letter-spacing:.5px;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    transition:.35s ease;
+
+    box-shadow:
+        0 10px 25px rgba(212,175,55,.30);
+}
+
+/* Shine Effect */
+
+.login-btn::before{
+    content:"";
+
+    position:absolute;
+
+    top:-50%;
+    left:-60px;
+
+    width:30px;
+    height:200%;
+
+    background:rgba(255,255,255,.45);
+
+    transform:rotate(25deg);
+
+    transition:.8s;
+}
+
+.login-btn:hover::before{
+    left:150%;
+}
+
+/* Hover */
+
+.login-btn:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 18px 35px rgba(212,175,55,.45);
+}
+
+/* Click */
+
+.login-btn:active{
+    transform:translateY(0);
+}
+
+/* Focus */
+
+.login-btn:focus{
+    outline:none;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .login-btn{
+        width:100%;
+        height:44px;
+        font-size:13px;
+    }
+}
+
+
+/* =========================
+   NAVBAR FIXED VERSION
+========================= */
+
+:root{
+  --shadow-lg:0 18px 40px rgba(0,0,0,.15);
+}
+
+body{
+  padding-top:72px;
+}
+
+.navbar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:99999;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  height:72px;
+  padding:0 40px;
+
+  background:rgba(10,22,40,.96);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(201,151,43,.22);
+
+  box-shadow:0 4px 24px rgba(0,0,0,.25);
+}
+
+/* NAV LINKS */
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+.nav-links li{
+  list-style:none;
+}
+
+.nav-links a{
+  display:block;
+  text-decoration:none;
+
+  color:#b8cbe4;
+
+  font-size:13.5px;
+  font-weight:500;
+
+  padding:8px 14px;
+
+  border-radius:8px;
+
+  transition:.3s;
+}
+
+.nav-links a:hover{
+  color:#fff;
+  background:rgba(201,151,43,.15);
+}
+
+/* MOBILE LOGIN HIDE */
+
+.mobile-login-item{
+  display:none;
+}
+
+/* DROPDOWN */
+
+.login-dropdown{
+  position:relative;
+}
+
+.dropdown-menu{
+  position:absolute;
+
+  top:calc(100% + 10px);
+  right:0;
+
+  width:220px;
+
+  background:#fff;
+
+  border-radius:14px;
+
+  overflow:hidden;
+
+  border:1px solid rgba(0,0,0,.1);
+
+  box-shadow:var(--shadow-lg);
+
+  opacity:0;
+  visibility:hidden;
+
+  transform:translateY(-10px);
+
+  transition:.3s;
+
+  z-index:999999;
+}
+
+.dropdown-menu.show{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+
+.dropdown-menu a{
+  display:flex;
+  align-items:center;
+
+  padding:14px 18px;
+
+  color:#111827;
+
+  text-decoration:none;
+}
+
+.dropdown-menu a:hover{
+  background:#f8fafc;
+}
+
+/* HAMBURGER */
+
+.menu-toggle{
+  display:none;
+
+  width:42px;
+  height:42px;
+
+  border-radius:10px;
+
+  background:rgba(255,255,255,.08);
+
+  color:white;
+
+  cursor:pointer;
+
+  align-items:center;
+  justify-content:center;
+
+  font-size:22px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .navbar{
+    padding:0 16px;
+  }
+
+  .desktop-login{
+    display:none !important;
+  }
+
+  .mobile-login-item{
+    display:block;
+    width:100%;
+  }
+
+  .menu-toggle{
+    display:flex;
+  }
+
+  .nav-links{
+    position:absolute;
+
+    top:76px;
+    right:16px;
+
+    width:280px;
+
+    flex-direction:column;
+
+    background:#12264d;
+
+    border-radius:16px;
+
+    padding:12px;
+
+    opacity:0;
+    visibility:hidden;
+
+    transform:translateY(-10px);
+
+    transition:.3s;
+
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+  }
+
+  .nav-links.active{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+  }
+
+  .nav-links li{
+    width:100%;
+  }
+
+  .nav-links a{
+    width:100%;
+  }
+
+  .login-btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  .dropdown-menu{
+    position:relative;
+
+    width:100%;
+
+    top:10px;
+    right:auto;
+  }
+}
+
+
+
+/* ================= MAP ================= */
+.map-section{
+  margin-top:50px;
+  text-align:center;
+}
+
+.map-title{
+  font-size:24px;
+  margin-bottom:15px;
+  color:#333;
+}
+
+.map-container{
+  position:relative;
+  width:100%;
+  height:350px;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.map-container iframe{
+  width:100%;
+  height:100%;
+  border:none;
+}
+
+/* MAP BUTTONS */
+.map-buttons{
+  margin-top:15px;
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:40px;
+}
+
+.map-buttons a{
+  padding:10px 18px;
+  border-radius:25px;
+  text-decoration:none;
+  color:white;
+  font-weight:500;
+  background:linear-gradient(135deg,#6a11cb,#1e3c72);
+  transition:0.3s;
+}
+
+.map-buttons a:hover{
+  transform:translateY(-3px) scale(1.05);
+}
+
+/* ================= HEADER ================= */
+.contact-header{ position:relative; text-align:center; margin:30px auto; padding:18px 30px; width:fit-content; min-width:250px; border-radius:14px; /* 🔥 ANIMATED BACKGROUND */ background: linear-gradient( 270deg, #0f172a, #1e293b, #312e81, #0f172a ); background-size:400% 400%; animation:bgMove 10s ease infinite; color:white; overflow:hidden; z-index:1; box-shadow:0 10px 35px rgba(0,0,0,0.5); } /* 🔥 HEADING */ .contact-header h1{ font-size:20px; margin:0; font-weight:600; background: linear-gradient(45deg,#38bdf8,#a78bfa,#f472b6); -webkit-background-clip: text; /* Chrome, Safari */ background-clip: text; /* Standard */ -webkit-text-fill-color: transparent; } /* SUBTEXT */ .contact-header p{ font-size:12px; color:#cbd5e1; margin-top:5px; } /* 🌈 GLOW BORDER */ .contact-header::before{ content:""; position:absolute; inset:-2px; border-radius:16px; background:linear-gradient( 90deg, #d73bf6, #eae733, #76ec48, #3b82f6 ); background-size:300% 100%; animation:borderMove 4s linear infinite; z-index:-1; } /* INNER DARK LAYER */ .contact-header::after{ content:""; position:absolute; inset:2px; border-radius:14px; background:rgba(15,23,42,0.85); z-index:-1; } /* 🔄 BACKGROUND ANIMATION */ @keyframes bgMove{ 0%{ background-position:0% 50%; } 50%{ background-position:100% 50%; } 100%{ background-position:0% 50%; } } /* 🔄 BORDER ANIMATION */ @keyframes borderMove{ 0%{ background-position:0% 50%; } 100%{ background-position:300% 50%; } } /* ✨ HOVER EFFECT */ .contact-header:hover{ transform:translateY(-4px) scale(1.03); box-shadow:0 20px 50px rgba(0,0,0,0.7); transition:0.3s; }
+
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* ================= CAPTCHA ================= */
+.captcha-box{
+  margin:15px 0;
+  text-align:center;
+}
+
+#captchaCanvas{
+  width:160px;
+  height:50px;
+  border-radius:10px;
+  background:#111;
+  display:block;
+  margin:0 auto 10px;
+}
+
+.captcha-actions{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+}
+
+.captcha-actions input{
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  width:150px;
+}
+
+.captcha-actions button{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  background:#6a11cb;
+  color:white;
+  cursor:pointer;
+}
+
+
+
+/* MOBILE */
+@media(max-width:768px){
+
+  .contact-container{
+    grid-template-columns:1fr;
+    padding:10px;
+  }
+
+  .contact-info,
+  .contact-form{
+    padding:20px;
+  }
+
+  .map-container{
+    height:250px;
+  }
+
+  .map-buttons{
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .map-buttons a{
+    width:80%;
+    text-align:center;
+  }
+
+  .glass-container{
+    grid-template-columns:1fr;
+  }
+
+  .captcha-actions{
+    flex-direction:column;
+  }
+
+  .captcha-actions input{
+    width:100%;
+  }
+
+  .contact-header h1{
+    font-size:18px;
+  }
+}
+
+/* SMALL MOBILE */
+@media(max-width:480px){
+
+  .contact-header{
+    min-width:auto;
+    padding:15px;
+  }
+
+  .contact-header h1{
+    font-size:16px;
+  }
+
+  .map-container{
+    height:220px;
+  }
+
+  .glass-box{
+    padding:15px;
+  }
+}
+
+
+
+/* ================= FOOTER BASE ================= */
+.glass-footer {
+  position: relative;
+  overflow: hidden;
+
+background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #fff;
+  padding: 50px 20px 20px;
+
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  font-family: "Poppins", sans-serif;
+}
+
+/* ================= RGB TOP LIGHT ================= */
+.glass-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+
+  background: linear-gradient(
+    90deg,
+    #ff004c,
+    #ffcc00,
+    #00ffcc,
+    #0066ff,
+    #ff00ff,
+    #ff004c
+  );
+
+  background-size: 400% 100%;
+  animation: rgbMove 6s linear infinite;
+
+  box-shadow: 0 0 15px rgba(255, 0, 100, 0.6),
+              0 0 25px rgba(0, 255, 200, 0.4);
+}
+
+/* RGB animation */
+@keyframes rgbMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* ================= CONTAINER ================= */
+.glass-container {
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ================= MAIN BOX ================= */
+.glass-box.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+/* ================= BRAND FLEX ================= */
+.brand-flex {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  background: rgba(255, 255, 255, 0.06);
+  padding: 20px;
+  border-radius: 16px;
+
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+
+  max-width: 800px;
+  width: 100%;
+}
+
+/* ================= LOGO ================= */
+.school-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ================= TEXT ================= */
+.brand-flex h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.brand-flex p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ================= FOOTER BOTTOM ================= */
+.glass-bottom {
+  margin-top: 25px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+/* ================= DEVELOPER CREDIT ================= */
+.dev-credit {
+  margin-top: 10px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dev-credit span {
+  color: #ff4d6d;
+  font-weight: 600;
+}
+
+/* ================= HOVER EFFECT ================= */
+.brand-flex:hover {
+  transform: translateY(-3px);
+  transition: 0.3s ease;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 600px) {
+  .brand-flex {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .school-logo {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+
+
+
+
+/* ===============================
+   UNIVERSAL RESPONSIVE FIXES
+================================= */
+
+html{
+  overflow-x:hidden;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+img{
+  max-width:100%;
+  height:auto;
+}
+
+/* CONTACT SECTION */
+.contact-container{
+  width:100%;
+}
+
+.contact-info,
+.contact-form{
+  width:100%;
+}
+
+/* FORM */
+.contact-form input,
+.contact-form textarea,
+.contact-form button{
+  width:100%;
+  max-width:100%;
+}
+
+/* INFO ITEMS */
+.info-item{
+  flex-wrap:wrap;
+}
+
+/* MAP */
+.map-section{
+  width:100%;
+  padding:0 10px;
+}
+
+.map-container{
+  width:100%;
+  max-width:100%;
+}
+
+.map-container iframe{
+  width:100%;
+  height:100%;
+}
+
+/* HEADER */
+.contact-header{
+  width:95%;
+  max-width:550px;
+}
+
+/* FOOTER */
+.glass-footer{
+  width:100%;
+}
+
+.glass-container{
+  width:100%;
+}
+
+.brand-flex{
+  width:100%;
+  max-width:100%;
+}
+
+/* ===============================
+   TABLET
+================================= */
+
+@media (max-width:1024px){
+
+  .contact-container{
+    gap:20px;
+    padding:15px;
+  }
+
+  .brand-flex{
+    padding:18px;
+  }
+
+}
+
+/* ===============================
+   MOBILE
+================================= */
+
+@media (max-width:768px){
+
+  .contact-container{
+    grid-template-columns:1fr;
+    margin:20px auto;
+    padding:10px;
+  }
+
+  .contact-info,
+  .contact-form{
+    padding:20px;
+    border-radius:15px;
+  }
+
+  .contact-header{
+    width:95%;
+    min-width:auto;
+    padding:18px;
+  }
+
+  .contact-header h1{
+    font-size:20px;
+  }
+
+  .contact-header p{
+    font-size:13px;
+  }
+
+  .map-title{
+    font-size:20px;
+  }
+
+  .map-container{
+    height:280px;
+  }
+
+  .brand-flex{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .school-logo{
+    width:75px;
+    height:75px;
+  }
+
+  .glass-bottom,
+  .dev-credit{
+    font-size:12px;
+  }
+
+}
+
+/* ===============================
+   SMALL MOBILE
+================================= */
+
+@media (max-width:480px){
+
+  .contact-container{
+    padding:8px;
+  }
+
+  .contact-info,
+  .contact-form{
+    padding:15px;
+  }
+
+  .contact-info h2,
+  .contact-form h2{
+    font-size:20px;
+  }
+
+  .info-icon{
+    width:35px;
+    height:35px;
+    font-size:16px;
+  }
+
+  .info-text span{
+    font-size:13px;
+    word-break:break-word;
+  }
+
+  .contact-header{
+    padding:15px;
+  }
+
+  .contact-header h1{
+    font-size:18px;
+  }
+
+  .contact-header p{
+    font-size:11px;
+  }
+
+  .map-container{
+    height:220px;
+  }
+
+  .map-buttons{
+    gap:10px;
+  }
+
+  .map-buttons a{
+    width:100%;
+    max-width:280px;
+    text-align:center;
+  }
+
+  .captcha-actions{
+    flex-direction:column;
+    width:100%;
+  }
+
+  .captcha-actions input,
+  .captcha-actions button{
+    width:100%;
+  }
+
+}
+
+/* ===============================
+   EXTRA SMALL DEVICES
+================================= */
+
+@media (max-width:320px){
+
+  .contact-header h1{
+    font-size:16px;
+  }
+
+  .contact-info h2,
+  .contact-form h2{
+    font-size:18px;
+  }
+
+  .school-logo{
+    width:60px;
+    height:60px;
+  }
+
+  .brand-flex{
+    padding:12px;
+  }
+
+}
+
+.nav-links a.active{
+  color:#e0aa14 !important;
+  background:rgba(212,175,55,.12);
+  border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<header class="navbar">
+
+  <div class="logo">
+    <img src="logo.png" alt="School Logo">
+    <div class="logo-text">
+      <span class="school-name">GSS School Shilla</span>
+      <span class="school-tagline">Est. Himachal Pradesh</span>
+    </div>
+  </div>
+
+ <ul class="nav-links" id="navLinks">
+  <li><a href="../index.html">Home</a></li>
+  <li><a href="./pub-notif.html">Notices</a></li>
+  <li><a href="./result.html">Results</a></li>
+  <li><a href="./downloads.html">Downloads</a></li>
+  <li><a href="./contact.html" class="active">Contact</a></li>
+
+  <li class="mobile-login-item">
+    <div class="login-dropdown">
+      <button class="login-btn" id="loginBtnMobile">
+        Login
+      </button>
+
+      <div class="dropdown-menu" id="dropdownMenuMobile">
+        <a href="../admin/login.html">🛠️ Admin Panel</a>
+        <a href="../no.html">🎓 Student Portal</a>
+        <a href="../no.html">👨‍🏫 Teacher Portal</a>
+      </div>
+    </div>
+  </li>
+</ul>
+
+  <div class="nav-actions">
+
+    <!-- Desktop Login -->
+    <div class="login-dropdown desktop-login">
+      <button class="login-btn" id="loginBtn">
+        Login
+      </button>
+
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="../admin/login.html">🛠️ Admin Panel</a>
+        <a href="../no.html">🎓 Student Portal</a>
+        <a href="../no.html">👨‍🏫 Teacher Portal</a>
+      </div>
+    </div>
+
+    <div class="menu-toggle" id="menuToggle">☰</div>
+
+  </div>
+
+</header>
+
+ <div class="contact-header">
+  <span></span>
+  <span></span>
+
+  <h1>Contact Us</h1>
+  <p>Get in touch with Govt Sr. Sec. School Shilla</p>
+</div>
+
+<div class="contact-container">
+
+  <!-- LEFT CARD -->
+  <div class="contact-info">
+    <h2>📞 Contact Info</h2>
+
+    <div class="info-item">
+      <div class="info-icon">🏫</div>
+      <div class="info-text">
+        <strong>School Name</strong>
+        <span id="schoolName"></span>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon">📍</div>
+      <div class="info-text">
+        <strong>Address</strong>
+        <span id="address"></span>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon">📞</div>
+      <div class="info-text">
+        <strong>Phone</strong>
+        <span id="phone"></span>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon">✉️</div>
+      <div class="info-text">
+        <strong>Email</strong>
+        <span id="email"></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT FORM -->
+  <div class="contact-form">
+    <h2>Send Message</h2>
+
+    <form id="contactForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="emailInput" placeholder="Your Email" required>
+      <textarea id="message" placeholder="Your Message" required></textarea>
+      <div class="captcha-box">
+
+  <canvas id="captchaCanvas"></canvas>
+
+  <div class="captcha-actions">
+    <input type="text" id="captchaInput" placeholder="Enter CAPTCHA" required>
+    <button type="button" id="refreshCaptcha">↻</button>
+  </div>
+
+</div>
+      <button type="submit">Send Message</button>
+     
+ 
+    </form>
+
+    <div class="success" id="successMsg"></div>
+  </div>
+
+</div>
+
+
+  <!-- GOOGLE MAP -->
+<div class="map-section">
+
+  <h2 class="map-title">📍 Our Location</h2>
+
+  <div class="map-container">
+
+    <!-- GOOGLE MAP -->
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d322.9277195506766!2d77.70109137720713!3d30.960744857674893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390f59cf7b1b7e75%3A0xec97618a85710546!2sSchool!5e1!3m2!1sen!2sin!4v1778048964394!5m2!1sen!2sin" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      loading="lazy">
+    </iframe>
+
+    <!-- CUSTOM MARKER -->
+    <div class="custom-marker">
+      <img src="../1777958395321-Picture1.png" alt="School Logo">
+      <span class="pulse"></span>
+    </div>
+
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="map-buttons">
+    <a href="https://maps.app.goo.gl/D55aZ9Z6pAqicyru9">
+      🌍 Open in Maps
+    </a>
+
+    <a href="https://www.google.com/maps/dir/?api=1&destination=
+Government+Primary+School+Shilla+राजकीय+प्राथमिक+विद्यालय+शिल्ला" target="_blank">
+      🚗 Get Directions
+    </a>
+  </div>
+
+</div>
+
+
+<footer class="glass-footer">
+
+  <div class="glass-container">
+
+    <div class="glass-box brand">
+
+  <div class="brand-flex">
+    <img src="../1778132110413-ChatGPT Image May 7, 2026, 10_56_26 AM.png" alt="School Logo" class="school-logo">
+
+    <div>
+      <h2>Govt Sr. Sec. School Shilla</h2>
+      <p>Empowering students with knowledge, discipline & excellence.</p>
+    </div>
+ 
+
+
+
+  <div class="glass-bottom">
+    © 2026 Govt. Sr. Sec. School Shilla
+  </div>
+  <div class="dev-credit">
+  <p>All Rights Reserved by <span>GSSS SHILLA</span></p>
+</div>
+
+</footer>
+
+<script>
+
+let captchaText = "";
+
+function generateCaptcha(){
+  const canvas = document.getElementById("captchaCanvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = 160;
+  canvas.height = 50;
+
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  captchaText = "";
+
+  // 🔥 random text generate
+  for(let i=0; i<6; i++){
+    captchaText += chars.charAt(Math.floor(Math.random()*chars.length));
+  }
+
+  // background
+  ctx.fillStyle = "#111";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // text draw (distorted)
+  for(let i=0; i<captchaText.length; i++){
+    const x = 20 + i*20;
+    const y = 30 + Math.random()*10;
+
+    ctx.font = `${20 + Math.random()*5}px Arial`;
+    ctx.fillStyle = `hsl(${Math.random()*360},100%,70%)`;
+
+    ctx.save();
+    ctx.translate(x,y);
+    ctx.rotate((Math.random()-0.5)*0.5);
+    ctx.fillText(captchaText[i],0,0);
+    ctx.restore();
+  }
+
+  // noise lines
+  for(let i=0; i<5; i++){
+    ctx.strokeStyle = `rgba(255,255,255,0.3)`;
+    ctx.beginPath();
+    ctx.moveTo(Math.random()*160, Math.random()*50);
+    ctx.lineTo(Math.random()*160, Math.random()*50);
+    ctx.stroke();
+  }
+}
+
+generateCaptcha();
+
+// 🔄 refresh button
+document.getElementById("refreshCaptcha").addEventListener("click", generateCaptcha);
+
+/* LOAD CONTACT INFO */
+async function loadContactInfo(){
+  try{
+    const res = await fetch("https://gsssshilla.onrender.com/admin/contact/info");
+    const data = await res.json();
+
+    document.getElementById("schoolName").innerText = data.school_name;
+    document.getElementById("address").innerText = data.address;
+    document.getElementById("phone").innerText = data.phone;
+    document.getElementById("email").innerText = data.email;
+
+  }catch(err){
+    console.error("Error loading contact info", err);
+  }
+}
+loadContactInfo();
+
+/* FORM SUBMIT */
+document.getElementById("contactForm").addEventListener("submit", async (e)=>{
+  e.preventDefault();  // 🔥 VERY IMPORTANT
+
+  // ✅ CAPTCHA CHECK
+  const userCaptcha = document.getElementById("captchaInput").value.trim();
+
+  if(userCaptcha !== captchaText){
+    alert("❌ Wrong CAPTCHA!");
+    generateCaptcha();  // new captcha
+    return; // ⛔ STOP HERE (message send nahi hoga)
+  }
+
+  // ✅ AGAR CAPTCHA SAHI HAI TABHI AAGE BADHEGA
+  const data = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("emailInput").value,
+    message: document.getElementById("message").value
+  };
+
+  try{
+    const res = await fetch("https://gsssshilla.onrender.com/contact",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    document.getElementById("successMsg").innerText = result.message;
+
+    document.getElementById("contactForm").reset();
+
+    generateCaptcha(); // 🔄 new captcha after success
+
+  }catch(err){
+    console.error(err);
+  }
+});
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
+
+  /* MOBILE MENU */
+
+  menuToggle.addEventListener("click", () => {
+
+    navLinks.classList.toggle("active");
+
+    menuToggle.innerHTML =
+      navLinks.classList.contains("active")
+      ? "✕"
+      : "☰";
+
+  });
+
+  /* CLOSE MENU ON LINK CLICK */
+
+  document.querySelectorAll("#navLinks a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+      navLinks.classList.remove("active");
+      menuToggle.innerHTML = "☰";
+
+    });
+
+  });
+
+  /* DROPDOWN */
+
+  function setupDropdown(btnId, menuId){
+
+    const btn = document.getElementById(btnId);
+    const menu = document.getElementById(menuId);
+
+    if(!btn || !menu) return;
+
+    btn.addEventListener("click",(e)=>{
+
+      e.stopPropagation();
+
+      menu.classList.toggle("show");
+
+    });
+
+    document.addEventListener("click",(e)=>{
+
+      if(
+        !btn.contains(e.target) &&
+        !menu.contains(e.target)
+      ){
+        menu.classList.remove("show");
+      }
+
+    });
+
+  }
+
+  setupDropdown("loginBtn","dropdownMenu");
+  setupDropdown("loginBtnMobile","dropdownMenuMobile");
+
+  load();
+
+});
+
+</script>
+
+</body>
+</html>
+
+
+
